@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import OSLog
 
 final class SingpostStoreSampleUITests: XCTestCase {
 
@@ -26,6 +27,32 @@ final class SingpostStoreSampleUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
+
+        let logStore = try OSLogStore(scope: .currentProcessIdentifier)
+
+
+        try logStore.getEntries().forEach { entry in
+
+            switch entry {
+            case let signpost as OSLogEntrySignpost:
+                print(signpost)
+                assertionFailure()
+            case let logEntry as OSLogEntryLog:
+                if logEntry.subsystem.hasPrefix("com.apple") {
+                    break
+                }
+                print("""
+                    ____
+                        subsystem: \(logEntry.subsystem)
+                        \(logEntry.date)
+                        \(logEntry.composedMessage)
+                    """)
+
+            default:
+                assertionFailure()
+                break
+            }
+        }
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
