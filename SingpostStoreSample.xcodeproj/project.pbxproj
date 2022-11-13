@@ -16,6 +16,7 @@
 		FE206534291E8BF40051F461 /* SingpostStoreSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE206533291E8BF40051F461 /* SingpostStoreSampleTests.swift */; };
 		FE20653E291E8BF40051F461 /* SingpostStoreSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE20653D291E8BF40051F461 /* SingpostStoreSampleUITests.swift */; };
 		FE206540291E8BF40051F461 /* SingpostStoreSampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE20653F291E8BF40051F461 /* SingpostStoreSampleUITestsLaunchTests.swift */; };
+		FE4ACFD42921064500199146 /* SignpostLoggerTestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4ACFD32921064500199146 /* SignpostLoggerTestRunner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		FE206539291E8BF40051F461 /* SingpostStoreSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SingpostStoreSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE20653D291E8BF40051F461 /* SingpostStoreSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingpostStoreSampleUITests.swift; sourceTree = "<group>"; };
 		FE20653F291E8BF40051F461 /* SingpostStoreSampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingpostStoreSampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FE4ACFD32921064500199146 /* SignpostLoggerTestRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignpostLoggerTestRunner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		FE206510291E8BF30051F461 = {
 			isa = PBXGroup;
 			children = (
+				FE4ACFD32921064500199146 /* SignpostLoggerTestRunner.swift */,
 				FE20651B291E8BF30051F461 /* SingpostStoreSample */,
 				FE206532291E8BF40051F461 /* SingpostStoreSampleTests */,
 				FE20653C291E8BF40051F461 /* SingpostStoreSampleUITests */,
@@ -260,6 +263,7 @@
 			files = (
 				FE206521291E8BF30051F461 /* ViewController.swift in Sources */,
 				FE20651D291E8BF30051F461 /* AppDelegate.swift in Sources */,
+				FE4ACFD42921064500199146 /* SignpostLoggerTestRunner.swift in Sources */,
 				FE20651F291E8BF30051F461 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

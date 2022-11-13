@@ -12,6 +12,9 @@ import os
 
 class ViewController: UIViewController {
 
+    let poster = OSSignposter()
+    var state: OSSignpostIntervalState!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -19,43 +22,48 @@ class ViewController: UIViewController {
         let mapView = MKMapView(frame: view.bounds)
         view.addSubview(mapView)
         mapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+
+        let signpostID = poster.makeSignpostID()
+        state = poster.beginInterval("View", id: signpostID)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        poster.endInterval("View", state)
 
-        TestClass().executeRandom()
+        let env = ProcessInfo.processInfo.environment
+
+        let s = env.map({ "\($0.key) \($0.value)\n" }).sorted().joined()
+        print(s)
+
+        if RunMode() == .uiTest {
+            runExecution()
+        }
     }
 
-
-}
-
-public class TestClass {
-
-    public let log: OSLog
-    public let oslog: os.OSLog
-
-    public let signposter: OSSignposter
-
-    public init() {
-        log = OSLog(subsystem: "com.personal.sample", category: "General")
-        oslog = os.OSLog(subsystem: "com.personal.sample", category: "General")
-//        signposter = OSSignposter(logHandle: log)
-        signposter = OSSignposter()
+    func runExecution() {
+        let runner = SignpostLoggerTestRunner(loggerMode: .logger)
+        runner.executeOSLog()
+        runner.executeLegacyOSLog()
     }
 
-    public func executeRandom() {
-        let state = signposter.beginInterval("Random execution")
+    enum RunMode {
+        case debugRun
+        case unitTest
+        case uiTest
 
-        let osSignpostID = os.OSSignpostID(log: oslog)
-        os_signpost(.begin, log: oslog, name: "os_signpost", signpostID: osSignpostID)
+        var isTest: Bool { self == .unitTest || self == .uiTest }
 
-        let duration = Double.random(in: 1..<4)
-        print("Going to sleep for \(duration)s")
-//        let duration = 5.0
-        usleep(useconds_t(duration * 1_000_000))
-        signposter.endInterval("Random execution", state)
-        os_signpost(.end, log: oslog, name: "os_signpost", signpostID: osSignpostID)
-        print("signposter.isEnabled: ", signposter.isEnabled)
+        init() {
+            let env = ProcessInfo.processInfo.environment
+            if env["XCTestBundlePath"] != nil {
+                self = .unitTest
+            } else if env["DYLD_LIBRARY_PATH"] != nil {
+                self = .debugRun
+            } else {
+                self = .uiTest
+            }
+        }
     }
+
 }
